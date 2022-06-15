@@ -2,11 +2,17 @@ from rest_framework import serializers
 from .models import *
 from django.contrib.auth.models import User
 
+class HorarioSerializer(serializers.ModelSerializer):
+    ubicacion = serializers.StringRelatedField(many=False)
+    class Meta:
+        model = Horario
+        fields = ['hora', 'cantidad_comida','ubicacion']
 class DispositivoSerializer(serializers.ModelSerializer):
+    horarios = HorarioSerializer(many=True)
     propietario = serializers.StringRelatedField(many=False)
     class Meta:
         model = Dispositivo
-        fields = ['id', 'ubicacion', 'imagen', 'propietario']
+        fields = ['id', 'ubicacion', 'imagen', 'propietario','horarios']
 class PerritoSerializer(serializers.ModelSerializer):
     nombre_usuarios = serializers.StringRelatedField(many=False)
     class Meta:
