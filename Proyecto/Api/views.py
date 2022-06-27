@@ -1,6 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.models import User
+from rest_framework import filters
+from rest_framework import generics
 from .serializers import *
 
 
@@ -22,9 +24,15 @@ class PerritoList(APIView):
         perritos = Perrito.objects.all()
         serializer = PerritoSerializer(perritos, many=True)
         return Response(serializer.data)
-
-class CityList(APIView):
+class DispositivoList(APIView):
     def get(self, request):
-        cities = City.objects.all()
-        serializer = CitySerializer(cities, many=True)
+        dispositivos = Dispositivo.objects.all()
+        serializer = DispositivoSerializer(dispositivos, many=True)
         return Response(serializer.data)
+class UserDetail(APIView):
+    def get(self, request, pk):
+        user = Usuario.objects.get(pk=pk)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+    def get_queryset(self):
+        return Usuario.objects.all()

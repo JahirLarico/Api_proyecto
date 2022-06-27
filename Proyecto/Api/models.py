@@ -24,11 +24,11 @@ class Dispositivo(models.Model):
     propietario = models.ForeignKey(Usuario, on_delete=models.CASCADE,related_name="dispositivos")
     ubicacion = models.CharField(max_length=50)
     imagen = models.ImageField(upload_to='dispositivos')
-
     def __str__(self):
         return self.ubicacion
 class Horario(models.Model):
     Dispo = models.ForeignKey(Dispositivo, on_delete=models.CASCADE ,related_name="horarios")
+    mensaje = models.CharField(max_length=50, default="JAMPIOIIIIII")
     hora = models.TimeField()
     cantidad_comida = models.IntegerField()
 
@@ -36,8 +36,7 @@ class City(models.Model):
     city = models.CharField(max_length=100)
 
     def __str__(self):
-      return self.city
-
+        return self.mensaje
 
 class Person(models.Model):
     dob = models.DateField(editable=True)
