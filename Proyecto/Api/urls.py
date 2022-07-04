@@ -14,8 +14,6 @@ urlpatterns = [
     #Users
     path('users', views.UserList.as_view(), name='users'),
     path('userDetail' , views.UserDetail.as_view(), name='userDetail'),
-
-    path('userJampi', views.UserJampi.as_view(), name='userJampi'),
     #Perritos
     path('perritos', views.PerritoList.as_view(), name='perritos'),
     path('user/perros', views.PerritosByUser.as_view(), name='perros'),
@@ -28,6 +26,8 @@ urlpatterns = [
     path('horarios',views.HorarioList.as_view(), name='horarios'),
     path('dispositivo/horarios',views.HorarioByDispositivo.as_view(), name='horarios'),
     path('dispositivo/horarios/edit',views.HorarioEdit.as_view(), name='horario-edit'),
+    #Imagen
+    path('media/perritos/<str:filename>', views.PerritoImage.as_view(), name='perrito-image'),
     #General
     path('users', views.UserList.as_view(), name='users'),
     path('perritos', views.PerritoList.as_view(), name='perritos'),

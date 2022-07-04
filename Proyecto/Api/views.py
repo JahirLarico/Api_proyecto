@@ -48,14 +48,6 @@ class UserDetail(APIView):
         user.delete()
         return Response(status=204)
 
-class UserJampi(APIView):
-    def get(self, request):
-        usuario = request.GET.get('username', '')
-        password = request.GET.get('password', '')
-        user = User.objects.get(username=usuario , password=password)
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
-
 class PerritoList(APIView):
     def get(self, request):
         perritos = Perrito.objects.all()
@@ -76,14 +68,6 @@ class PerritosByUser(APIView):
         return Response(serializer.data)
     def post(self, request):
         serializer = PerritoSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
-    def put(self, request):
-        id=request.GET.get('idDueno', '')
-        perritos = Perrito.objects.get(id=id)
-        serializer = PerritoSerializer(perritos, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=201)
@@ -156,21 +140,6 @@ class DispositivoByUser(APIView):
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
 
-class DispostivosByUser(APIView):
-    def get(self,request):
-        id=request.GET.get('id', '')
-        dispositivos = Dispositivo.objects.get(id=id)
-        serializer = DispositivoSerializer(dispositivos)
-        return Response(serializer.data)
-    def post(self, request):
-        id=request.GET.get('id', '')
-        dispositivo = Dispositivo.objects.get(id=id)
-        serializer = Dispositivo(dispositivo, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=400)
-
 class DispositivoEdit(APIView):
     def get(self, request):
         userId= request.GET.get('idDueno', '')
@@ -218,14 +187,6 @@ class HorarioByDispositivo(APIView):
             serializer.save()
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
-    def put(self, request):
-        id=request.GET.get('dispositivoId', '')
-        horarios = Horario.objects.get(id=id)
-        serializer = HorarioSerializer(horarios, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
 
 class HorarioEdit(APIView):
     def get(self, request):
@@ -249,3 +210,9 @@ class HorarioEdit(APIView):
         horarios = Horario.objects.get(id=horarioId, Dispo__id=dispoId)
         horarios.delete()
         return Response(status=204)
+class PerritoImage(APIView):
+    def get(self, request):
+        id=request.GET.get('id', '')
+        perritos = Perrito.objects.filter(id=id)
+        serializer = PerritoSerializer(perritos, many=True)
+        return Response(serializer.data)

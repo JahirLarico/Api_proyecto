@@ -1,40 +1,39 @@
+from turtle import numinput
 from django.db import models
 from django.contrib.auth.models import User
-from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
-
-class Usuario(models.Model):
-    nombre_usuarios = models.CharField(max_length=50 , default='a')
-    apellido = models.CharField(max_length=50 ,default='b')
-    def apellido (self):
-        self.apellido = str(self.apellido)
-        return make_password(self.apellido)
-    def __str__(self):
-        return self.nombre_usuarios
 
 class Perrito(models.Model):
     dueño = models.ForeignKey(User, on_delete=models.CASCADE, related_name="perros")
     nombre_perrito = models.CharField(max_length=50)
-    raza = models.CharField(max_length=50 , default="asd")
+    raza = models.CharField(max_length=50 )
     edad = models.IntegerField()
-    foto = models.CharField(max_length=50)
-    ult_alimentacion = models.CharField(max_length=50 , default="asd")
-
+    foto = models.ImageField(upload_to='perritos', blank=True)
     def __str__(self):
         return self.nombre_perrito
 
 class Dispositivo(models.Model):
     propietario = models.ForeignKey(User, on_delete=models.CASCADE,related_name="dispositivos")
-    ubicacion = models.CharField(max_length=50 , default="Cocina")
-    imagen = models.CharField(max_length=50)
+    ubicacion = models.CharField(max_length=50 )
+    nombre = models.CharField(max_length=50)
+    url_conexion = models.CharField(max_length=50 , null=True)
     def __str__(self):
-        return self.ubicacion
+        return self.nombre
 
 class Horario(models.Model):
+    POCO = 'Poco'
+    MASOMENOS = 'Masomenos'
+    MUCHO = 'Mucho'
+
+    CANTIDADES_CHOICES = [
+        (POCO, 'Poco'),
+        (MASOMENOS, 'Masomenos'),
+        (MUCHO, 'Mucho'),
+    ]
+
     Dispo = models.ForeignKey(Dispositivo, on_delete=models.CASCADE ,related_name="horarios")
-    mensaje = models.CharField(max_length=50, default="JAMPIOIIIIII")
     hora = models.TimeField()
-    cantidad_comida = models.IntegerField()
+    fecha = models.DateField(null=True)
+    cantidad_comida = models.CharField(max_length=50, choices=CANTIDADES_CHOICES)
 
