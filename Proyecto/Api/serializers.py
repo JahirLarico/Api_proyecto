@@ -6,7 +6,7 @@ class HorarioSerializer(serializers.ModelSerializer):
     Dispo_id = serializers.StringRelatedField(many=False)
     class Meta:
         model = Horario
-        fields = ['id','hora','fecha' ,'cantidad','Dispo_id']
+        fields = ['id','hora','fecha' ,'cantidad_comida','Dispo_id']
     def create(self, validated_data):
         return Horario.objects.create(**validated_data)
     
@@ -15,7 +15,7 @@ class DispositivoSerializer(serializers.ModelSerializer):
     #propietario = serializers.StringRelatedField(many=False)
     class Meta:
         model = Dispositivo
-        fields = ['id', 'nombre', 'ubicacion', 'url','propietario','horarios']
+        fields = ['id', 'nombre', 'ubicacion', 'url_conexion','propietario','horarios']
     def create(self, validated_data):
         horarios_data = validated_data.pop('horarios')
         dispositivo = Dispositivo.objects.create(**validated_data)
@@ -23,7 +23,7 @@ class DispositivoSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         instance.nombre = validated_data.get('nombre', instance.nombre)
         instance.ubicacion = validated_data.get('ubicacion', instance.ubicacion)
-        instance.url_conexion = validated_data.get('url', instance.url_conexion)
+        instance.url_conexion = validated_data.get('url_conexion', instance.url_conexion)
         instance.propietario = validated_data.get('propietario', instance.propietario)
         instance.save()
         return instance
@@ -34,7 +34,7 @@ class PerritoSerializer(serializers.ModelSerializer):
     #dueño = serializers.StringRelatedField(many=False)
     class Meta:
         model = Perrito
-        fields = ['id', 'foto','nombre', 'raza', 'edad','dueño']
+        fields = ['id', 'foto','nombre_perrito', 'raza', 'edad','dueño']
 class UserSerializer(serializers.ModelSerializer):
     #perros=PerritoSerializer(many=True)
     #dispositivos=DispositivoSerializer(many=True)

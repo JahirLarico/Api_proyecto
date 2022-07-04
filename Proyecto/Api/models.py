@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class Perrito(models.Model):
     dueño = models.ForeignKey(User, on_delete=models.CASCADE, related_name="perros")
-    nombre = models.CharField(max_length=50)
+    nombre_perrito = models.CharField(max_length=50)
     raza = models.CharField(max_length=50 )
     edad = models.IntegerField()
     foto = models.ImageField(upload_to='perritos', blank=True)
@@ -16,7 +16,7 @@ class Dispositivo(models.Model):
     propietario = models.ForeignKey(User, on_delete=models.CASCADE,related_name="dispositivos")
     ubicacion = models.CharField(max_length=50 )
     nombre = models.CharField(max_length=50)
-    url = models.CharField(max_length=50 , null=True)
+    url_conexion = models.CharField(max_length=50 , null=True)
     def __str__(self):
         return self.nombre
 
@@ -34,5 +34,5 @@ class Horario(models.Model):
     Dispo = models.ForeignKey(Dispositivo, on_delete=models.CASCADE ,related_name="horarios")
     hora = models.TimeField()
     fecha = models.DateField(null=True)
-    cantidad = models.CharField(max_length=50, choices=CANTIDADES_CHOICES)
+    cantidad_comida = models.CharField(max_length=50, choices=CANTIDADES_CHOICES)
 
