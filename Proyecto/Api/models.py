@@ -8,7 +8,7 @@ class Perrito(models.Model):
     nombre_perrito = models.CharField(max_length=50)
     raza = models.CharField(max_length=50 )
     edad = models.IntegerField()
-    foto = models.ImageField(upload_to='perritos', blank=True)
+    foto = models.CharField(max_length=200)
     def __str__(self):
         return self.nombre_perrito
 
